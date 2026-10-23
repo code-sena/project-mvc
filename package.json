@@ -1,0 +1,28 @@
+{
+  "name": "project-mvc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "next dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Esteban0228/project-mvc.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Esteban0228/project-mvc/issues"
+  },
+  "homepage": "https://github.com/Esteban0228/project-mvc#readme",
+  "dependencies": {
+    "mysql2": "^3.24.6",
+    "next": "^16.4.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  }
+}
