@@ -152,7 +152,7 @@ Flujo: `rama de trabajo → develop → qa → main`. Nunca se hace commit direc
 
 | Grupo | Scopes |
 |---|---|
-| Módulo | `client`, `reservation`, `location` |
+| Módulo | `client`, `reservation`, `location`, `system` |
 | Entidad | `person`, `user`, `reservation-type`, `state`, `city` |
 | Capa | `view`, `api`, `controller`, `model` |
 | Transversal | `db`, `docker`, `config`, `assets`, `governance`, `architecture` |

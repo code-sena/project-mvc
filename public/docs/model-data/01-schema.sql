@@ -48,6 +48,7 @@ CREATE TABLE `user` (
   person_id INT          NOT NULL,
   CONSTRAINT pk_user PRIMARY KEY (id),
   CONSTRAINT uk_user_username UNIQUE (username),
+  CONSTRAINT uk_user_person_id UNIQUE (person_id),
   CONSTRAINT fk_user_person FOREIGN KEY (person_id)
     REFERENCES person (id) ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

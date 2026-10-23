@@ -29,10 +29,19 @@ else la persona existe
   C -> C : hashPassword(password)
   C -> M : insert(user)
   M -> DB : INSERT
-  DB --> M : registro creado
-  M --> C : User (sin password)
-  C --> R : User
-  R --> V : 201 Created
-  V --> U : muestra confirmación
+
+  alt username repetido o la persona ya tiene usuario
+    DB --> M : error de valor único
+    M --> C : error de duplicado
+    C --> R : error de conflicto
+    R --> V : 409 Conflict
+    V --> U : "Username repetido o la persona ya tiene usuario"
+  else se crea el usuario
+    DB --> M : registro creado
+    M --> C : User (sin password)
+    C --> R : User
+    R --> V : 201 Created
+    V --> U : muestra confirmación
+  end
 end
 @enduml

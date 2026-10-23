@@ -51,7 +51,7 @@ package "location" {
   }
 }
 
-Person "1" --> "0..*" User : tiene
+Person "1" --> "0..1" User : tiene
 User "1" --> "0..*" Reservation : realiza
 ReservationType "1" --> "0..*" Reservation : clasifica
 State "1" --> "0..*" City : contiene

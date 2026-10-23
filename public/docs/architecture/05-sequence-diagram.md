@@ -10,7 +10,7 @@ Valida los datos y que el email no esté repetido.
 
 ## Crear usuario
 
-Valida que la Person exista y guarda la contraseña con hash.
+Valida que la Person exista, que no tenga ya un usuario y que el username no esté repetido, y guarda la contraseña con hash.
 
 ![Secuencia: crear usuario](diagrams/09-sequence-create-user.svg)
 
@@ -33,4 +33,4 @@ Valida que exista el State.
 | 201 Created | Registro creado |
 | 400 Bad Request | Datos inválidos o incompletos |
 | 404 Not Found | La llave foránea apunta a un registro que no existe |
-| 409 Conflict | Valor único repetido (por ejemplo, el email) |
+| 409 Conflict | Valor único repetido (por ejemplo, el email, el username o una person que ya tiene user) |

@@ -30,8 +30,9 @@ Los diagramas de secuencia de cada flujo están en [05-sequence-diagram.md](05-s
 | reservation | `/reservation/reservation-type`, `/reservation/reservation-type/[id]` | `/api/reservation-type`, `/api/reservation-type/[id]` |
 | location | `/location/state`, `/location/state/[id]` | `/api/state`, `/api/state/[id]` |
 | location | `/location/city`, `/location/city/[id]` | `/api/city`, `/api/city/[id]` |
+| system | `/` | `/api/health` |
 
-Cada API expone: `GET` (listar) y `POST` (crear) en la ruta base; `GET`, `PUT` y `DELETE` en `[id]`.
+Cada API de entidad expone: `GET` (listar) y `POST` (crear) en la ruta base; `GET`, `PUT` y `DELETE` en `[id]`. `/api/health` solo expone `GET` y responde si la app llega a la base de datos.
 
 ## Contenedores
 
@@ -46,18 +47,26 @@ Cada API expone: `GET` (listar) y `POST` (crear) en la ruta base; `GET`, `PUT` y
 - **Credenciales:** van en `.env`, que no se sube al repositorio. `.env.example` sirve de plantilla.
 - **Orden de arranque:** `app` espera a que `db` pase su healthcheck antes de iniciar.
 
-Archivos que se agregan en la raíz del proyecto:
+Archivos de configuración en la raíz del proyecto:
 
 ```
 project-mvc/
 ├── Dockerfile            ← imagen de la app Next.js
 ├── docker-compose.yml    ← servicios app + db, red y volumen
 ├── .dockerignore
-└── .env.example          ← plantilla de variables (DB_HOST, DB_USER…)
+├── .env.example          ← plantilla de variables (DB_HOST, DB_USER…)
+├── package.json
+├── next.config.mjs
+└── jsconfig.json
 ```
 
 El script de la base de datos está en [`../model-data/01-schema.sql`](../model-data/01-schema.sql). El servicio `db` lo monta como `./public/docs/model-data:/docker-entrypoint-initdb.d:ro`.
 
+## Decisiones tomadas
+
+- **Lenguaje:** JavaScript (no TypeScript). Los archivos usan `.js` y `.jsx`.
+- **Person → User:** una persona tiene como máximo un usuario (`UNIQUE` en `user.person_id`).
+
 ## Decisiones pendientes
 
-- Lenguaje: JavaScript o TypeScript.
+- **Roles:** columna `role` en `user` (o tabla `role`). Se decide al construir el inicio de sesión.

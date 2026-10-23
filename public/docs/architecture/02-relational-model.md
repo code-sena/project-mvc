@@ -19,7 +19,7 @@ Nombres según [best-practice.md](../governance/best-practice.md#34-base-de-dato
 | user | id | INT | PK, autoincremental |
 | user | username | VARCHAR(50) | NOT NULL, UNIQUE |
 | user | password | VARCHAR(255) | NOT NULL (se guarda el hash) |
-| user | person_id | INT | NOT NULL, FK → person.id |
+| user | person_id | INT | NOT NULL, UNIQUE, FK → person.id |
 
 ### Módulo reservation
 
@@ -52,7 +52,7 @@ Nombres según [best-practice.md](../governance/best-practice.md#34-base-de-dato
 
 | Relación | Cardinalidad | Regla al borrar |
 |---|---|---|
-| person → user | 1 : N | No se borra una person que tenga user |
+| person → user | 1 : 0..1 | No se borra una person que tenga user |
 | user → reservation | 1 : N | No se borra un user que tenga reservation |
 | reservation_type → reservation | 1 : N | No se borra un tipo en uso |
 | state → city | 1 : N | No se borra un state que tenga city |
@@ -61,7 +61,7 @@ Nombres según [best-practice.md](../governance/best-practice.md#34-base-de-dato
 ## Observaciones
 
 - **`user.username`:** en el modelo original la columna se llamaba `User`, igual que la tabla. Se renombró a `username` para no repetir el nombre de la tabla en la columna (`user.user`).
-- **Person → User es 1 : N.** Si cada persona solo puede tener un usuario, basta con poner `UNIQUE` en `user.person_id`.
+- **Person → User es 1 : 0..1.** Cada persona tiene como máximo un usuario: `user.person_id` es `UNIQUE` (restricción `uk_user_person_id`).
 - **`reservation.city_id` conecta el módulo reservation con location:** cada reserva se hace en una ciudad.
 - **Motor: MySQL 8.4.** Las tablas usan InnoDB y utf8mb4 para que las llaves foráneas funcionen y se acepten tildes y ñ.
 - **Minúsculas obligatorias:** MySQL en Linux (Docker) distingue mayúsculas en los nombres de tabla.

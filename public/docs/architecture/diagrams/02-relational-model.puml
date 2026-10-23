@@ -18,7 +18,7 @@ package "client" {
     --
     * username : VARCHAR(50) <<UK>>
     * password : VARCHAR(255) <<hash>>
-    * person_id : INT <<FK>>
+    * person_id : INT <<FK, UK>>
   }
 }
 
@@ -59,7 +59,7 @@ package "location" {
   }
 }
 
-person ||--o{ user : tiene
+person ||--o| user : tiene
 user ||--o{ reservation : realiza
 reservation_type ||--o{ reservation : clasifica
 state ||--o{ city : contiene
