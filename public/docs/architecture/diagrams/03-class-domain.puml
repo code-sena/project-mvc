@@ -1,0 +1,59 @@
+@startuml 03-class-domain
+!include style.puml
+title Diagrama de clases - dominio (model)
+
+package "client" {
+  class Person <<entity>> {
+    +id : int
+    +name : string
+    +email : string
+    +phone : string
+  }
+
+  class User <<entity>> {
+    +id : int
+    +username : string
+    -password : string
+    +personId : int
+  }
+}
+
+package "reservation" {
+  class ReservationType <<entity>> {
+    +id : int
+    +name : string
+    +description : string
+  }
+
+  class Reservation <<entity>> {
+    +id : int
+    +name : string
+    +userId : int
+    +reservationTypeId : int
+    +cityId : int
+  }
+}
+
+package "location" {
+  class State <<entity>> {
+    +id : int
+    +postalCode : string
+    +name : string
+    +description : string
+  }
+
+  class City <<entity>> {
+    +id : int
+    +postalCode : string
+    +name : string
+    +description : string
+    +stateId : int
+  }
+}
+
+Person "1" --> "0..1" User : tiene
+User "1" --> "0..*" Reservation : realiza
+ReservationType "1" --> "0..*" Reservation : clasifica
+State "1" --> "0..*" City : contiene
+City "1" --> "0..*" Reservation : ubica
+@enduml

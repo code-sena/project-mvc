@@ -1,0 +1,26 @@
+@startuml 06-use-case-client
+!include style.puml
+title Casos de uso - Cliente
+left to right direction
+
+actor "Cliente" as Cliente
+
+rectangle "project-mvc" {
+  usecase "Registrarse" as UC_Register
+  usecase "Registrar persona" as UC_Person
+  usecase "Iniciar sesión" as UC_Login
+  usecase "Crear reserva" as UC_Create
+  usecase "Validar usuario, tipo\nde reserva y ciudad" as UC_ValRes
+  usecase "Consultar mis reservas" as UC_Mine
+  usecase "Cancelar reserva" as UC_Cancel
+}
+
+Cliente --> UC_Register
+Cliente --> UC_Login
+Cliente --> UC_Create
+Cliente --> UC_Mine
+
+UC_Register ..> UC_Person : <<include>>
+UC_Create ..> UC_ValRes : <<include>>
+UC_Cancel ..> UC_Mine : <<extend>>
+@enduml

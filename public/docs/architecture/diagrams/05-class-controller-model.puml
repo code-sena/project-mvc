@@ -1,0 +1,59 @@
+@startuml 05-class-controller-model
+!include style.puml
+title Diagrama de clases - controladores y modelos de la aplicación
+left to right direction
+
+package "controller" {
+  class PersonController <<controller>> {
+    +getAll() +getById(id) +create(data) +update(id, data) +remove(id)
+  }
+  class UserController <<controller>> {
+    +getAll() +getById(id) +create(data) +update(id, data) +remove(id)
+  }
+  class ReservationTypeController <<controller>> {
+    +getAll() +getById(id) +create(data) +update(id, data) +remove(id)
+  }
+  class ReservationController <<controller>> {
+    +getAll() +getById(id) +create(data) +update(id, data) +remove(id)
+  }
+  class StateController <<controller>> {
+    +getAll() +getById(id) +create(data) +update(id, data) +remove(id)
+  }
+  class CityController <<controller>> {
+    +getAll() +getById(id) +create(data) +update(id, data) +remove(id)
+  }
+}
+
+package "model" {
+  class PersonModel <<model>> {
+    +findAll() +findById(id) +insert(p) +update(id, p) +delete(id)
+  }
+  class UserModel <<model>> {
+    +findAll() +findById(id) +insert(u) +update(id, u) +delete(id)
+  }
+  class ReservationTypeModel <<model>> {
+    +findAll() +findById(id) +insert(t) +update(id, t) +delete(id)
+  }
+  class ReservationModel <<model>> {
+    +findAll() +findById(id) +insert(r) +update(id, r) +delete(id)
+  }
+  class StateModel <<model>> {
+    +findAll() +findById(id) +insert(e) +update(id, e) +delete(id)
+  }
+  class CityModel <<model>> {
+    +findAll() +findById(id) +insert(c) +update(id, c) +delete(id)
+  }
+}
+
+PersonController --> PersonModel
+UserController --> UserModel
+UserController ..> PersonModel : valida personId
+ReservationTypeController --> ReservationTypeModel
+ReservationController --> ReservationModel
+ReservationController ..> UserModel : valida userId
+ReservationController ..> ReservationTypeModel : valida reservationTypeId
+ReservationController ..> CityModel : valida cityId
+StateController --> StateModel
+CityController --> CityModel
+CityController ..> StateModel : valida stateId
+@enduml

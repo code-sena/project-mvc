@@ -1,0 +1,42 @@
+@startuml 08-sequence-create-person
+!include style.puml
+title Secuencia - Registrar persona
+autonumber
+
+actor "Usuario" as U
+participant "person-form.jsx\n<<view>>" as V
+participant "api/person/route.js\n<<route>>" as R
+participant "person-controller.js\n<<controller>>" as C
+participant "person-model.js\n<<model>>" as M
+database "MySQL" as DB
+
+U -> V : llena el formulario y envía
+V -> R : POST /api/person {name, email, phone}
+R -> C : create(body)
+C -> C : validate(data)
+
+alt datos inválidos
+  C --> R : error de validación
+  R --> V : 400 Bad Request
+  V --> U : muestra los errores
+else datos válidos
+  C -> M : findByEmail(email)
+  M -> DB : SELECT
+  DB --> M : resultado
+  alt el email ya existe
+    M --> C : Person
+    C --> R : error de duplicado
+    R --> V : 409 Conflict
+    V --> U : "El email ya está registrado"
+  else email disponible
+    M --> C : null
+    C -> M : insert(person)
+    M -> DB : INSERT
+    DB --> M : registro creado
+    M --> C : Person
+    C --> R : Person
+    R --> V : 201 Created
+    V --> U : muestra confirmación
+  end
+end
+@enduml

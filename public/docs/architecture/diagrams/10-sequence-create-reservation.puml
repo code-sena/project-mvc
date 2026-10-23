@@ -1,0 +1,49 @@
+@startuml 10-sequence-create-reservation
+!include style.puml
+title Secuencia - Crear reserva
+autonumber
+
+actor "Cliente" as U
+participant "reservation-form.jsx\n<<view>>" as V
+participant "api/reservation/route.js\n<<route>>" as R
+participant "reservation-controller.js\n<<controller>>" as C
+participant "user-model.js\n<<model>>" as UM
+participant "reservation-type-model.js\n<<model>>" as TM
+participant "city-model.js\n<<model>>" as CM
+participant "reservation-model.js\n<<model>>" as M
+database "MySQL" as DB
+
+U -> V : elige el tipo, la ciudad y escribe el nombre
+V -> R : POST /api/reservation {name, userId, reservationTypeId, cityId}
+R -> C : create(body)
+C -> C : validate(data)
+
+C -> UM : findById(userId)
+UM -> DB : SELECT
+DB --> UM : resultado
+UM --> C : User | null
+
+C -> TM : findById(reservationTypeId)
+TM -> DB : SELECT
+DB --> TM : resultado
+TM --> C : ReservationType | null
+
+C -> CM : findById(cityId)
+CM -> DB : SELECT
+DB --> CM : resultado
+CM --> C : City | null
+
+alt el usuario, el tipo o la ciudad no existe
+  C --> R : error de llave foránea
+  R --> V : 404 Not Found
+  V --> U : indica qué dato no existe
+else todos existen
+  C -> M : insert(reservation)
+  M -> DB : INSERT
+  DB --> M : registro creado
+  M --> C : Reservation
+  C --> R : Reservation
+  R --> V : 201 Created
+  V --> U : muestra la reserva creada
+end
+@enduml

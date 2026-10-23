@@ -1,0 +1,72 @@
+@startuml 02-relational-model
+!include style.puml
+title Modelo relacional - project-mvc
+hide circle
+hide methods
+
+package "client" {
+  entity "person" as person {
+    * id : INT <<PK>>
+    --
+    * name : VARCHAR(100)
+    * email : VARCHAR(150) <<UK>>
+    phone : VARCHAR(20)
+  }
+
+  entity "user" as user {
+    * id : INT <<PK>>
+    --
+    * username : VARCHAR(50) <<UK>>
+    * password : VARCHAR(255) <<hash>>
+    * person_id : INT <<FK, UK>>
+  }
+}
+
+package "reservation" {
+  entity "reservation_type" as reservation_type {
+    * id : INT <<PK>>
+    --
+    * name : VARCHAR(50) <<UK>>
+    description : VARCHAR(255)
+  }
+
+  entity "reservation" as reservation {
+    * id : INT <<PK>>
+    --
+    * name : VARCHAR(100)
+    * user_id : INT <<FK>>
+    * reservation_type_id : INT <<FK>>
+    * city_id : INT <<FK>>
+  }
+}
+
+package "location" {
+  entity "state" as state {
+    * id : INT <<PK>>
+    --
+    * postal_code : VARCHAR(10)
+    * name : VARCHAR(100)
+    description : VARCHAR(255)
+  }
+
+  entity "city" as city {
+    * id : INT <<PK>>
+    --
+    * postal_code : VARCHAR(10)
+    * name : VARCHAR(100)
+    description : VARCHAR(255)
+    * state_id : INT <<FK>>
+  }
+}
+
+person ||--o| user : tiene
+user ||--o{ reservation : realiza
+reservation_type ||--o{ reservation : clasifica
+state ||--o{ city : contiene
+city ||--o{ reservation : ubica
+
+legend right
+  * = NOT NULL
+  PK = llave primaria · FK = llave foránea · UK = único
+endlegend
+@enduml

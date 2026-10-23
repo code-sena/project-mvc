@@ -1,0 +1,47 @@
+@startuml 09-sequence-create-user
+!include style.puml
+title Secuencia - Crear usuario
+autonumber
+
+actor "Administrador" as U
+participant "user-form.jsx\n<<view>>" as V
+participant "api/user/route.js\n<<route>>" as R
+participant "user-controller.js\n<<controller>>" as C
+participant "person-model.js\n<<model>>" as PM
+participant "user-model.js\n<<model>>" as M
+database "MySQL" as DB
+
+U -> V : elige la persona, escribe username y contraseña
+V -> R : POST /api/user {username, password, personId}
+R -> C : create(body)
+C -> C : validate(data)
+C -> PM : findById(personId)
+PM -> DB : SELECT
+DB --> PM : resultado
+
+alt la persona no existe
+  PM --> C : null
+  C --> R : error de llave foránea
+  R --> V : 404 Not Found
+  V --> U : "La persona no existe"
+else la persona existe
+  PM --> C : Person
+  C -> C : hashPassword(password)
+  C -> M : insert(user)
+  M -> DB : INSERT
+
+  alt username repetido o la persona ya tiene usuario
+    DB --> M : error de valor único
+    M --> C : error de duplicado
+    C --> R : error de conflicto
+    R --> V : 409 Conflict
+    V --> U : "Username repetido o la persona ya tiene usuario"
+  else se crea el usuario
+    DB --> M : registro creado
+    M --> C : User (sin password)
+    C --> R : User
+    R --> V : 201 Created
+    V --> U : muestra confirmación
+  end
+end
+@enduml

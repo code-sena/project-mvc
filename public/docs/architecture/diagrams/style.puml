@@ -1,0 +1,47 @@
+' Estilo común para todos los diagramas de project-mvc
+!pragma layout smetana
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+skinparam roundCorner 8
+skinparam ArrowColor #475569
+skinparam ArrowFontColor #334155
+skinparam BackgroundColor #FFFFFF
+skinparam TitleFontSize 18
+skinparam TitleFontStyle bold
+
+skinparam class {
+  BackgroundColor #F8FAFC
+  BorderColor #334155
+  HeaderBackgroundColor #DBEAFE
+  StereotypeFontColor #1D4ED8
+}
+
+skinparam entity {
+  BackgroundColor #F8FAFC
+  BorderColor #334155
+}
+
+skinparam package {
+  BackgroundColor #F1F5F9
+  BorderColor #94A3B8
+}
+
+skinparam usecase {
+  BackgroundColor #EFF6FF
+  BorderColor #1D4ED8
+}
+
+skinparam actor {
+  BackgroundColor #FFFFFF
+  BorderColor #334155
+}
+
+skinparam sequence {
+  LifeLineBorderColor #94A3B8
+  ParticipantBackgroundColor #EFF6FF
+  ParticipantBorderColor #1D4ED8
+  ActorBackgroundColor #FFFFFF
+  ActorBorderColor #334155
+  GroupBackgroundColor #F1F5F9
+}

@@ -1,0 +1,37 @@
+@startuml 11-sequence-create-city
+!include style.puml
+title Secuencia - Crear ciudad
+autonumber
+
+actor "Administrador" as U
+participant "city-form.jsx\n<<view>>" as V
+participant "api/city/route.js\n<<route>>" as R
+participant "city-controller.js\n<<controller>>" as C
+participant "state-model.js\n<<model>>" as SM
+participant "city-model.js\n<<model>>" as M
+database "MySQL" as DB
+
+U -> V : elige el departamento y llena los datos
+V -> R : POST /api/city {postalCode, name, description, stateId}
+R -> C : create(body)
+C -> C : validate(data)
+C -> SM : findById(stateId)
+SM -> DB : SELECT
+DB --> SM : resultado
+
+alt el departamento no existe
+  SM --> C : null
+  C --> R : error de llave foránea
+  R --> V : 404 Not Found
+  V --> U : "El departamento no existe"
+else el departamento existe
+  SM --> C : State
+  C -> M : insert(city)
+  M -> DB : INSERT
+  DB --> M : registro creado
+  M --> C : City
+  C --> R : City
+  R --> V : 201 Created
+  V --> U : muestra confirmación
+end
+@enduml

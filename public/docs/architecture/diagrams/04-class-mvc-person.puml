@@ -1,0 +1,62 @@
+@startuml 04-class-mvc-person
+!include style.puml
+title Diagrama de clases - capas MVC (ejemplo: Person)
+
+package "view/client/person" {
+  class PersonList <<view>> {
+    +persons : Person[]
+    +render()
+    +onEdit(id)
+    +onDelete(id)
+  }
+
+  class PersonForm <<view>> {
+    +person : Person
+    +render()
+    +onSubmit(data)
+  }
+}
+
+package "app/api/person" {
+  class PersonRoute <<route>> {
+    +GET(request)
+    +POST(request)
+    +PUT(request, id)
+    +DELETE(request, id)
+  }
+}
+
+package "controller/client" {
+  class PersonController <<controller>> {
+    +getAll() : Person[]
+    +getById(id) : Person
+    +create(data) : Person
+    +update(id, data) : Person
+    +remove(id) : void
+    -validate(data) : void
+  }
+}
+
+package "model/client" {
+  class PersonModel <<model>> {
+    +findAll() : Person[]
+    +findById(id) : Person
+    +insert(person) : Person
+    +update(id, person) : Person
+    +delete(id) : void
+  }
+
+  class Person <<entity>> {
+    +id : int
+    +name : string
+    +email : string
+    +phone : string
+  }
+}
+
+PersonList ..> PersonRoute : fetch
+PersonForm ..> PersonRoute : fetch
+PersonRoute --> PersonController
+PersonController --> PersonModel
+PersonModel ..> Person : retorna
+@enduml
