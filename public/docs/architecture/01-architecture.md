@@ -58,6 +58,10 @@ project-mvc/
 
 El script de la base de datos está en [`../model-data/01-schema.sql`](../model-data/01-schema.sql). El servicio `db` lo monta como `./public/docs/model-data:/docker-entrypoint-initdb.d:ro`.
 
-## Decisiones pendientes
+## Technical Decisions
 
-- Lenguaje: JavaScript o TypeScript.
+| Decision | Choice | Rationale |
+|---|---|---|
+| Language | **JavaScript (ES Modules, `.js` and `.jsx`)** | Keeps the learning curve focused on the MVC pattern and the naming conventions in [`best-practice.md`](../governance/best-practice.md). Uses `jsconfig.json` for path aliases (`@/model/...`, `@/controller/...`, `@/view/...`) |
+| Data Access | **Direct SQL with `mysql2/promise`** | Clearly exposes the mapping between `snake_case` (MySQL) and `camelCase` (JavaScript) inside the `model` layer without hiding queries behind an ORM |
+| Styling | **Global CSS + CSS Modules (`.module.css`)** | Prevents class name collisions across views while enforcing layer naming conventions |

@@ -1,0 +1,43 @@
+@startuml 14-sequence-delete-entity
+!include style.puml
+title Sequence - Delete Record (ON DELETE RESTRICT)
+autonumber
+
+actor "Administrator" as U
+participant "state-list.jsx\n<<view>>" as V
+participant "api/state/[id]/route.js\n<<route>>" as R
+participant "state-controller.js\n<<controller>>" as C
+participant "state-model.js\n<<model>>" as M
+database "MySQL" as DB
+
+U -> V : clicks delete on a record
+V -> R : DELETE /api/state/{id}
+R -> C : remove(id)
+C -> M : findById(id)
+M -> DB : SELECT
+DB --> M : result
+
+alt record does not exist
+  M --> C : null
+  C --> R : not found error
+  R --> V : 404 Not Found
+  V --> U : "Record not found"
+else record exists
+  M --> C : State
+  C -> M : delete(id)
+  M -> DB : DELETE
+  alt has child records (ON DELETE RESTRICT)
+    DB --> M : error ER_ROW_IS_REFERENCED
+    M --> C : foreign key constraint error
+    C --> R : integrity conflict
+    R --> V : 409 Conflict
+    V --> U : "Cannot delete record with associated data"
+  else no child records
+    DB --> M : deleted
+    M --> C : void
+    C --> R : void
+    R --> V : 200 OK
+    V --> U : refreshes list
+  end
+end
+@enduml

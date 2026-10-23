@@ -1,0 +1,42 @@
+@startuml 13-sequence-create-reservation-type
+!include style.puml
+title Sequence - Create Reservation Type
+autonumber
+
+actor "Administrator" as U
+participant "reservation-type-form.jsx\n<<view>>" as V
+participant "api/reservation-type/route.js\n<<route>>" as R
+participant "reservation-type-controller.js\n<<controller>>" as C
+participant "reservation-type-model.js\n<<model>>" as M
+database "MySQL" as DB
+
+U -> V : fills out form and submits
+V -> R : POST /api/reservation-type {name, description}
+R -> C : create(body)
+C -> C : validate(data)
+
+alt invalid data
+  C --> R : validation error
+  R --> V : 400 Bad Request
+  V --> U : displays validation errors
+else valid data
+  C -> M : findByName(name)
+  M -> DB : SELECT
+  DB --> M : result
+  alt name already exists
+    M --> C : ReservationType
+    C --> R : duplicate error
+    R --> V : 409 Conflict
+    V --> U : "Reservation type already exists"
+  else name available
+    M --> C : null
+    C -> M : insert(reservationType)
+    M -> DB : INSERT
+    DB --> M : record created
+    M --> C : ReservationType
+    C --> R : ReservationType
+    R --> V : 201 Created
+    V --> U : displays confirmation
+  end
+end
+@enduml

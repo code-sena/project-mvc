@@ -14,7 +14,7 @@
 | [02-relational-model.md](architecture/02-relational-model.md) | Modelo relacional (MR) |
 | [03-class-diagram.md](architecture/03-class-diagram.md) | Clases del dominio, capas MVC, controladores y modelos |
 | [04-use-case-diagram.md](architecture/04-use-case-diagram.md) | Casos de uso del Cliente y del Administrador |
-| [05-sequence-diagram.md](architecture/05-sequence-diagram.md) | Registrar persona, crear usuario, crear reserva, crear ciudad |
+| [05-sequence-diagram.md](architecture/05-sequence-diagram.md) | Registrar persona, crear usuario, crear reserva, crear ciudad, create state, create reservation type, delete record |
 
 Las fuentes de los diagramas están en `architecture/diagrams/*.puml` (PlantUML) y cada una tiene su `.svg` generado al lado. `style.puml` define el estilo común.
 
