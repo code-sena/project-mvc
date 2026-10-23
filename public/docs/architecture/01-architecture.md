@@ -58,6 +58,6 @@ project-mvc/
 
 El script de la base de datos está en [`../model-data/01-schema.sql`](../model-data/01-schema.sql). El servicio `db` lo monta como `./public/docs/model-data:/docker-entrypoint-initdb.d:ro`.
 
-## Decisiones pendientes
+## Decisiones tomadas
 
-- Lenguaje: JavaScript o TypeScript.
+- **Lenguaje: TypeScript.** Tipado estático en modelos y controladores reduce errores al mapear filas de MySQL a entidades del dominio.

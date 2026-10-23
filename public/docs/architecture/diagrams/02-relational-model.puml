@@ -9,16 +9,22 @@ package "client" {
     * id : INT <<PK>>
     --
     * name : VARCHAR(100)
-    * email : VARCHAR(150) <<UK>>
+    * email : VARCHAR(150) <<UK*>>
     phone : VARCHAR(20)
+    * created_at : DATETIME
+    * updated_at : DATETIME
+    deleted_at : DATETIME
   }
 
   entity "user" as user {
     * id : INT <<PK>>
     --
-    * username : VARCHAR(50) <<UK>>
+    * username : VARCHAR(50) <<UK*>>
     * password : VARCHAR(255) <<hash>>
-    * person_id : INT <<FK>>
+    * person_id : INT <<FK, UK*>>
+    * created_at : DATETIME
+    * updated_at : DATETIME
+    deleted_at : DATETIME
   }
 }
 
@@ -26,8 +32,11 @@ package "reservation" {
   entity "reservation_type" as reservation_type {
     * id : INT <<PK>>
     --
-    * name : VARCHAR(50) <<UK>>
+    * name : VARCHAR(50) <<UK*>>
     description : VARCHAR(255)
+    * created_at : DATETIME
+    * updated_at : DATETIME
+    deleted_at : DATETIME
   }
 
   entity "reservation" as reservation {
@@ -37,6 +46,10 @@ package "reservation" {
     * user_id : INT <<FK>>
     * reservation_type_id : INT <<FK>>
     * city_id : INT <<FK>>
+    * reservation_date : DATETIME
+    * created_at : DATETIME
+    * updated_at : DATETIME
+    deleted_at : DATETIME
   }
 }
 
@@ -47,6 +60,9 @@ package "location" {
     * postal_code : VARCHAR(10)
     * name : VARCHAR(100)
     description : VARCHAR(255)
+    * created_at : DATETIME
+    * updated_at : DATETIME
+    deleted_at : DATETIME
   }
 
   entity "city" as city {
@@ -56,6 +72,9 @@ package "location" {
     * name : VARCHAR(100)
     description : VARCHAR(255)
     * state_id : INT <<FK>>
+    * created_at : DATETIME
+    * updated_at : DATETIME
+    deleted_at : DATETIME
   }
 }
 
@@ -67,6 +86,7 @@ city ||--o{ reservation : ubica
 
 legend right
   * = NOT NULL
-  PK = llave primaria · FK = llave foránea · UK = único
+  PK = llave primaria · FK = llave foránea
+  UK* = único entre registros activos (deleted_at IS NULL)
 endlegend
 @enduml

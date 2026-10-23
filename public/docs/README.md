@@ -15,6 +15,7 @@
 | [03-class-diagram.md](architecture/03-class-diagram.md) | Clases del dominio, capas MVC, controladores y modelos |
 | [04-use-case-diagram.md](architecture/04-use-case-diagram.md) | Casos de uso del Cliente y del Administrador |
 | [05-sequence-diagram.md](architecture/05-sequence-diagram.md) | Registrar persona, crear usuario, crear reserva, crear ciudad |
+| [06-business-rules.md](architecture/06-business-rules.md) | Reglas de negocio por módulo: validaciones del controlador que no cubre el esquema de la base de datos |
 
 Las fuentes de los diagramas están en `architecture/diagrams/*.puml` (PlantUML) y cada una tiene su `.svg` generado al lado. `style.puml` define el estilo común.
 
