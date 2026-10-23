@@ -26,30 +26,30 @@ Valida que exista el State.
 
 ![Secuencia: crear ciudad](diagrams/11-sequence-create-city.svg)
 
-## Crear departamento
+## Create State
 
-Valida los datos obligatorios (`postalCode` y `name`) e inserta el registro.
+Validates required fields (`postalCode` and `name`) and inserts the record.
 
-![Secuencia: crear departamento](diagrams/12-sequence-create-state.svg)
+![Sequence: create state](diagrams/12-sequence-create-state.svg)
 
-## Crear tipo de reserva
+## Create Reservation Type
 
-Valida los datos y que el nombre del tipo de reserva (`name`) no esté repetido.
+Validates required fields and checks that the reservation type `name` is not duplicated.
 
-![Secuencia: crear tipo de reserva](diagrams/13-sequence-create-reservation-type.svg)
+![Sequence: create reservation type](diagrams/13-sequence-create-reservation-type.svg)
 
-## Eliminar registro (restricción foránea)
+## Delete Record (Foreign Key Constraint)
 
-Verifica que el registro exista y maneja la restricción `ON DELETE RESTRICT` cuando tiene registros hijos asociados.
+Verifies that the record exists and handles the `ON DELETE RESTRICT` constraint when child records are associated.
 
-![Secuencia: eliminar registro](diagrams/14-sequence-delete-entity.svg)
+![Sequence: delete record](diagrams/14-sequence-delete-entity.svg)
 
 ## Códigos de respuesta usados
 
 | Código | Cuándo |
 |---|---|
-| 200 OK | Consulta exitosa, actualización o eliminación completada |
+| 200 OK | Successful query, update, or deletion completed |
 | 201 Created | Registro creado |
 | 400 Bad Request | Datos inválidos o incompletos |
-| 404 Not Found | El registro buscado o la llave foránea apunta a un registro que no existe |
-| 409 Conflict | Valor único repetido (email, username, name) o registro padre con hijos asociados (`ON DELETE RESTRICT`) |
+| 404 Not Found | La llave foránea apunta a un registro que no existe |
+| 409 Conflict | Duplicate unique value (`email`, `username`, `name`) or parent record with associated child records (`ON DELETE RESTRICT`) |

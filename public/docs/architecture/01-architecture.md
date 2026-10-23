@@ -58,10 +58,10 @@ project-mvc/
 
 El script de la base de datos está en [`../model-data/01-schema.sql`](../model-data/01-schema.sql). El servicio `db` lo monta como `./public/docs/model-data:/docker-entrypoint-initdb.d:ro`.
 
-## Decisiones técnicas
+## Technical Decisions
 
-| Decisión | Elección | Justificación |
+| Decision | Choice | Rationale |
 |---|---|---|
-| Lenguaje | **JavaScript (ES Modules, `.js` y `.jsx`)** | Mantiene la curva de aprendizaje enfocada en el patrón MVC y las convenciones de [`best-practice.md`](../governance/best-practice.md). Se apoya en `jsconfig.json` para alias de rutas (`@/model/...`, `@/controller/...`, `@/view/...`) |
-| Acceso a datos | **SQL directo con `mysql2/promise`** | Permite ver con claridad la traducción entre `snake_case` (MySQL) y `camelCase` (JavaScript) dentro de la capa `model`, sin ocultar las consultas detrás de un ORM |
-| Estilos | **CSS global + CSS Modules (`.module.css`)** | Evita colisiones de nombres entre vistas manteniendo las reglas de nomenclatura por capa |
+| Language | **JavaScript (ES Modules, `.js` and `.jsx`)** | Keeps the learning curve focused on the MVC pattern and the naming conventions in [`best-practice.md`](../governance/best-practice.md). Uses `jsconfig.json` for path aliases (`@/model/...`, `@/controller/...`, `@/view/...`) |
+| Data Access | **Direct SQL with `mysql2/promise`** | Clearly exposes the mapping between `snake_case` (MySQL) and `camelCase` (JavaScript) inside the `model` layer without hiding queries behind an ORM |
+| Styling | **Global CSS + CSS Modules (`.module.css`)** | Prevents class name collisions across views while enforcing layer naming conventions |

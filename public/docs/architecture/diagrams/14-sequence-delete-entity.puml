@@ -1,43 +1,43 @@
 @startuml 14-sequence-delete-entity
 !include style.puml
-title Secuencia - Eliminar registro (ON DELETE RESTRICT)
+title Sequence - Delete Record (ON DELETE RESTRICT)
 autonumber
 
-actor "Administrador" as U
+actor "Administrator" as U
 participant "state-list.jsx\n<<view>>" as V
 participant "api/state/[id]/route.js\n<<route>>" as R
 participant "state-controller.js\n<<controller>>" as C
 participant "state-model.js\n<<model>>" as M
 database "MySQL" as DB
 
-U -> V : pulsa eliminar en un registro
+U -> V : clicks delete on a record
 V -> R : DELETE /api/state/{id}
 R -> C : remove(id)
 C -> M : findById(id)
 M -> DB : SELECT
-DB --> M : resultado
+DB --> M : result
 
-alt el registro no existe
+alt record does not exist
   M --> C : null
-  C --> R : no encontrado
+  C --> R : not found error
   R --> V : 404 Not Found
-  V --> U : "El registro no existe"
-else el registro existe
+  V --> U : "Record not found"
+else record exists
   M --> C : State
   C -> M : delete(id)
   M -> DB : DELETE
-  alt tiene registros hijos (ON DELETE RESTRICT)
+  alt has child records (ON DELETE RESTRICT)
     DB --> M : error ER_ROW_IS_REFERENCED
-    M --> C : error de restricción foránea
-    C --> R : conflicto de integridad
+    M --> C : foreign key constraint error
+    C --> R : integrity conflict
     R --> V : 409 Conflict
-    V --> U : "No se puede eliminar porque tiene registros asociados"
-  else sin registros hijos
-    DB --> M : eliminado
+    V --> U : "Cannot delete record with associated data"
+  else no child records
+    DB --> M : deleted
     M --> C : void
     C --> R : void
     R --> V : 200 OK
-    V --> U : actualiza la lista
+    V --> U : refreshes list
   end
 end
 @enduml
