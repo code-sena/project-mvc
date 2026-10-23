@@ -26,13 +26,13 @@ package "controller" {
 
 package "model" {
   class PersonModel <<model>> {
-    +findAll() +findById(id) +insert(p) +update(id, p) +delete(id)
+    +findAll() +findById(id) +findByEmail(email) +insert(p) +update(id, p) +delete(id)
   }
   class UserModel <<model>> {
-    +findAll() +findById(id) +insert(u) +update(id, u) +delete(id)
+    +findAll() +findById(id) +findByUsername(username) +insert(u) +update(id, u) +delete(id)
   }
   class ReservationTypeModel <<model>> {
-    +findAll() +findById(id) +insert(t) +update(id, t) +delete(id)
+    +findAll() +findById(id) +findByName(name) +insert(t) +update(id, t) +delete(id)
   }
   class ReservationModel <<model>> {
     +findAll() +findById(id) +insert(r) +update(id, r) +delete(id)

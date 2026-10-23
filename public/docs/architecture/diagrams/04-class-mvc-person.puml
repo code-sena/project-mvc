@@ -41,6 +41,7 @@ package "model/client" {
   class PersonModel <<model>> {
     +findAll() : Person[]
     +findById(id) : Person
+    +findByEmail(email) : Person
     +insert(person) : Person
     +update(id, person) : Person
     +delete(id) : void
